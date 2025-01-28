@@ -1,15 +1,16 @@
 class Solution {
- public:
-  int numSubarraysWithSum(vector<int>& nums, int goal) {
-    int ans = 0;
-    int prefix = 0;
-    unordered_map<int, int> count{{0, 1}};
-    for (const int num : nums) {
-      prefix += num;
-      if (const auto it = count.find(prefix - goal); it != count.cend())
-        ans += it->second;
-      ++count[prefix];
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int n = nums.size();
+        int result = 0;
+        int prefixSum = 0;
+        unordered_map<int,int>mp;
+        mp[0] = 1;
+        for(int i=0; i<n; i++){
+            prefixSum += nums[i];
+            result += mp[prefixSum - goal];
+            mp[prefixSum]++;
+        }
+        return result;  
     }
-    return ans;
-  }
 };
